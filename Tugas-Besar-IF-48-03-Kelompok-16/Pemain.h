@@ -1,7 +1,7 @@
 #ifndef PEMAIN_H_INCLUDED
 #define PEMAIN_H_INCLUDED
-
 #include <iostream>
+
 using namespace std;
 
 struct dataPemain {
