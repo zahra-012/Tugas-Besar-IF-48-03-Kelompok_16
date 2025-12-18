@@ -44,22 +44,38 @@ void deleteAfterTurnamen(adrTurnamen Prec, adrTurnamen &P) {
 void showAllPemainUnik(List L) {
     cout << "\n== DAFTAR SEMUA PEMAIN (UNIK) ==\n";
 
-    List tempList;
-    createListTurnamen(tempList);
+    // Array sederhana untuk menyimpan ID pemain yang sudah ditampilkan
+    string idSudahAda[100];
+    int jumlahUnik = 0;
 
     adrTurnamen T = L.first;
     while (T != NULL) {
-        adrPemain P = T->firstChild;
+        adrPemain P = T->firstPemain;
         while (P != NULL) {
-            if (!isPemainTerdaftar(tempList, P->info.idPemain)) {
-                cout << "- " << P->info.idPemain << " | " << P->info.namaPemain;
-                cout << " | Ranking: " << P->info.ranking << endl;
-                adrPemain baru = createElmPemain(P->info);
-                insertLastPemain((adrTurnamen&)tempList.first, baru);
+            // Cek apakah ID sudah ada
+            bool sudahAda = false;
+            for (int i = 0; i < jumlahUnik; i++) {
+                if (idSudahAda[i] == P->info.idPemain) {
+                    sudahAda = true;
+                    break;
+                }
             }
+
+            // Jika belum ada, tampilkan dan tambahkan ke array
+            if (!sudahAda && jumlahUnik < 100) {
+                cout << "- " << P->info.idPemain << " | " << P->info.namaPemain
+                     << " | Ranking: " << P->info.ranking << endl;
+                idSudahAda[jumlahUnik] = P->info.idPemain;
+                jumlahUnik++;
+            }
+
             P = P->next;
         }
         T = T->next;
+    }
+
+    if (jumlahUnik == 0) {
+        cout << "(Belum ada pemain)\n";
     }
 }
 
@@ -69,6 +85,18 @@ int totalSemuaPemain(List L) {
 
     while (T != NULL) {
         total += countPemain(T);
+        T = T->next;
+    }
+
+    return total;
+}
+
+int countTotalTurnamen(List L) {
+    int total = 0;
+    adrTurnamen T = L.first;
+
+    while (T != NULL) {
+        total++;
         T = T->next;
     }
 

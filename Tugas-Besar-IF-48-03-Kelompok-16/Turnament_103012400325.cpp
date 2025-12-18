@@ -7,9 +7,9 @@ void createListTurnamen(List &L) {
 }
 
 adrTurnamen createElmTurnamen(dataTurnamen newData) {
-    adrTurnamen P = new elmTurnamen;
+    adrTurnamen P = new elemenTurnamen;
     P->info = newData;
-    P->firstChild = NULL;
+    P->firstPemain = NULL;
     P->next = NULL;
     return P;
 }
@@ -84,7 +84,7 @@ void showAllData(List L) {
 
 int countPemain(adrTurnamen T) {
     int total = 0;
-    adrPemain P = T->firstChild;
+    adrPemain P = T->firstPemain;
 
     while (P != NULL) {
         total++;
